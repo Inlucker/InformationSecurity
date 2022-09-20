@@ -8,16 +8,21 @@ namespace Lab01
   {
     static void Main(string[] args)
     {
-      string processor_id = "";
+      string unique_data = "";
       try
       {
         ManagementObjectSearcher searcher =
             new ManagementObjectSearcher("root\\CIMV2",
-            "SELECT * FROM Win32_Processor");
+            "SELECT * FROM Win32_NetworkAdapter");
 
         foreach (ManagementObject queryObj in searcher.Get())
         {
-          processor_id = queryObj["ProcessorId"].ToString();
+          try
+          {
+            unique_data = queryObj["MACAddress"].ToString();
+            break;
+          }
+          catch {}
         }
       }
       catch (ManagementException e)
@@ -26,8 +31,8 @@ namespace Lab01
         return;
       }
 
-      string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"/.Lab01/processorid";
-      string saved_processor_id = "";
+      string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"/.Lab01/macadress";
+      string saved_unique_data = "";
 
       if (File.Exists(path))
       {
@@ -35,17 +40,21 @@ namespace Lab01
         {
           string s = "";
           while ((s = sr.ReadLine()) != null)
-            saved_processor_id = s;
+            saved_unique_data = s;
         }
       }
 
-      if (saved_processor_id != processor_id)
+      if (saved_unique_data != unique_data)
       {
         Console.WriteLine("You can't execute this programm on this computer");
+        Console.WriteLine("Для завершения нажмите любую клавишу...");
+        Console.ReadKey();
         return;
       }
 
       Console.WriteLine("Hello World!");
+      Console.WriteLine("Для завершения нажмите любую клавишу...");
+      Console.ReadKey();
     }
   }
 }

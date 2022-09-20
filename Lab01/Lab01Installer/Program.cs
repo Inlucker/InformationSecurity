@@ -13,25 +13,33 @@ namespace Lab01Installer
       {
         ManagementObjectSearcher searcher =
             new ManagementObjectSearcher("root\\CIMV2",
-            "SELECT * FROM Win32_Processor");
-        string serial_number = "";
+            "SELECT * FROM Win32_NetworkAdapter");
+        string unique_data = "";
 
         foreach (ManagementObject queryObj in searcher.Get())
         {
           Console.WriteLine("-----------------------------------");
-          Console.WriteLine("Win32_Processor instance");
+          Console.WriteLine("Win32_NetworkAdapter instance");
           Console.WriteLine("-----------------------------------");
-          Console.WriteLine("ProcessorId: {0}", queryObj["ProcessorId"]);
+          Console.WriteLine("MACAddress: {0}", queryObj["MACAddress"]);
 
-          serial_number = queryObj["ProcessorId"].ToString();
-
-          Directory.CreateDirectory(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"/.Lab01");
-          string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"/.Lab01/processorid";
-          using (FileStream fs = File.Create(path))
+          try
           {
-            byte[] info = new UTF8Encoding(true).GetBytes(serial_number);
-            fs.Write(info, 0, info.Length);
+            unique_data = queryObj["MACAddress"].ToString();
+            break;
           }
+          catch //(System.NullReferenceException e)
+          {
+            //Console.WriteLine(e.Message);
+          }
+        }
+
+        Directory.CreateDirectory(System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"/.Lab01");
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"/.Lab01/macadress";
+        using (FileStream fs = File.Create(path))
+        {
+          byte[] info = new UTF8Encoding(true).GetBytes(unique_data);
+          fs.Write(info, 0, info.Length);
         }
       }
       catch (ManagementException e)
