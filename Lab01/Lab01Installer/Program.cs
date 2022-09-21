@@ -46,6 +46,26 @@ namespace Lab01Installer
       {
         Console.WriteLine("An error occurred while querying for WMI data: " + e.Message);
       }
+
+      string command = "dotnet publish ./Lab01src/Lab01.csproj -r win-x64 -p:PublishSingleFile=true --self-contained false";
+      System.Diagnostics.Process process = System.Diagnostics.Process.Start("cmd.exe", "/C " + command);
+      process.WaitForExit();
+
+      Console.WriteLine(Directory.GetCurrentDirectory());
+
+      try
+      {
+        File.Move("./Lab01src/bin/Debug/netcoreapp3.1/win-x64/publish/Lab01.exe", "./Lab01.exe", true);
+        Directory.Delete("./Lab01src/bin", true);
+        Directory.Delete("./Lab01src/obj", true);
+      }
+      catch(Exception e)
+      {
+        Console.WriteLine(e.Message);
+      }
+
+      Console.WriteLine("Для завершения нажмите любую клавишу...");
+      Console.ReadKey();
     }
   }
 }

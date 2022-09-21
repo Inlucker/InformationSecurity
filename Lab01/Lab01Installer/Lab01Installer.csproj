@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Lab01src\**" />
+    <EmbeddedResource Remove="Lab01src\**" />
+    <None Remove="Lab01src\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
 
