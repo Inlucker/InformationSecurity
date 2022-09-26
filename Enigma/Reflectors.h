@@ -13,13 +13,15 @@ public:
   Reflector() = default;
   virtual ~Reflector() = 0;
 
-  unsigned char reflect(unsigned char in, Rotor *rotor);
+  char reflect(char in, char prev_char = 'A');
+  char reflect(char in, Rotor *rotor);
 
 protected:
-  //string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //string map = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  unsigned char alphabet[SIZE];
-  unsigned char map[SIZE];
+  int getAlphabetIndex(char c);
+
+protected:
+  string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  string map = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 };
 
 class ReflectorB : public Reflector

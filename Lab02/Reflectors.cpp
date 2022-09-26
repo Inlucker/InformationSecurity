@@ -2,45 +2,12 @@
 
 Reflector::~Reflector() {}
 
-int Reflector::getAlphabetIndex(char c)
+unsigned char Reflector::reflect(unsigned char in, Rotor *rotor)
 {
-  if (c > 90)
-    c -= 32;
-  int index = c - 'A';
-  return index;
-}
+  unsigned char prev_char = rotor->getCurChar();
+  unsigned char tmp = map[in - prev_char];
 
-char Reflector::reflect(char in, char prev_char)
-{
-  int index = getAlphabetIndex(in) - getAlphabetIndex(prev_char);
-  if (index < 0)
-    index += 26;
-  else
-    index %= 26;
-  char out = map[index];
-
-  index = (getAlphabetIndex(out) + getAlphabetIndex(prev_char)) % 26;
-  out = alphabet[index];
-
-  return out;
-}
-
-char Reflector::reflect(char in, Rotor *rotor)
-{
-  int prev_index = getAlphabetIndex(rotor->getCurChar());
-  int index = getAlphabetIndex(in) - prev_index;
-  if (index < 0)
-    index += 26;
-  else
-    index %= 26;
-  char tmp = map[index];
-
-  index = (getAlphabetIndex(tmp) + prev_index) % 26;
-  //tmp = alphabet[index];
-  char out = alphabet[index];
-
-  //index = rotor->getMapIndex(tmp);
-  //char out = alphabet[index];
+  unsigned char out = alphabet[tmp + prev_char];
 
   return out;
 }
@@ -48,5 +15,14 @@ char Reflector::reflect(char in, Rotor *rotor)
 //ReflectorB
 ReflectorB::ReflectorB()
 {
-  map = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
+  for (int i = 0; i < SIZE; i++)
+  {
+    alphabet[i] = i;
+    map[i] = i;
+  }
+
+  int array[256] = {67, 205, 207, 87, 199, 80, 89, 191, 189, 28, 39, 40, 127, 93, 137, 95, 185, 73, 52, 78, 96, 60, 229, 222, 152, 66, 178, 43, 9, 182, 236, 187, 184, 47, 115, 226, 81, 126, 125, 10, 11, 216, 132, 27, 211, 190, 107, 33, 214, 131, 139, 249, 18, 220, 188, 240, 202, 61, 109, 148, 21, 57, 146, 116, 175, 141, 25, 0, 181, 164, 144, 213, 94, 17, 106, 252, 128, 118, 19, 177, 5, 36, 219, 90, 234, 114, 130, 3, 113, 6, 83, 168, 140, 13, 72, 15, 20, 217, 250, 176, 117, 218, 242, 129, 160, 203, 74, 46, 233, 58, 210, 172, 247, 88, 85, 34, 63, 100, 77, 169, 163, 136, 173, 225, 235, 38, 37, 12, 76, 103, 86, 49, 42, 197, 147, 135, 121, 14, 154, 50, 92, 65, 223, 162, 70, 230, 62, 134, 59, 198, 195, 212, 24, 174, 138, 215, 204, 237, 248, 159, 104, 238, 143, 120, 69, 228, 243, 244, 91, 119, 224, 251, 111, 122, 153, 64, 99, 79, 26, 246, 221, 68, 29, 186, 32, 16, 183, 31, 54, 8, 45, 7, 192, 200, 196, 150, 194, 133, 149, 4, 193, 227, 56, 105, 156, 1, 255, 2, 253, 254, 110, 44, 151, 71, 48, 155, 41, 97, 101, 82, 53, 180, 23, 142, 170, 123, 35, 201, 165, 22, 145, 239, 245, 108, 84, 124, 30, 157, 161, 231, 55, 241, 102, 166, 167, 232, 179, 112, 158, 51, 98, 171, 75, 208, 209, 20};
+
+  for (int i = 0; i < SIZE; i++)
+    map[i] = array[i];
 }
