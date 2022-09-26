@@ -4,10 +4,7 @@
 Rotor::Rotor()
 {
   for (int i = 0; i < SIZE; i++)
-  {
-    alphabet[i] = i;
     map[i] = i;
-  }
   cur_pos = 0;
 }
 
@@ -25,7 +22,7 @@ int Rotor::getMapIndex(unsigned char c)
 
 unsigned char Rotor::getCurChar()
 {
-  return alphabet[cur_pos];
+  return cur_pos;
 }
 
 unsigned char Rotor::forward(unsigned char in, unsigned char prev_char)
@@ -37,9 +34,7 @@ unsigned char Rotor::forward(unsigned char in, unsigned char prev_char)
 
 unsigned char Rotor::backward(unsigned char in, unsigned char next_char)
 {
-  in = alphabet[getMapIndex(in)];
-  //unsigned char index = in - (cur_pos - next_char);
-  //unsigned char out = map[index];
+  in = getMapIndex(in);
   unsigned char out = in - (cur_pos - next_char);
   return out;
 }
@@ -47,7 +42,7 @@ unsigned char Rotor::backward(unsigned char in, unsigned char next_char)
 bool Rotor::rotate()
 {
   cur_pos = (cur_pos + 1) % SIZE;
-  bool flag = alphabet[cur_pos] == rotate_char;
+  bool flag = cur_pos == rotate_char;
   return flag;
 }
 
@@ -60,13 +55,11 @@ void Rotor::setPos(int pos)
 Rotor1::Rotor1()
 {
   for (int i = 0; i < SIZE; i++)
-  {
-    alphabet[i] = i;
     map[i] = i;
-  }
   random_shuffle(&map[0], &map[SIZE]);
 
-  bool flags[SIZE];
+  // Проверка и запись ротора
+  /*bool flags[SIZE];
   for (int i = 0; i < SIZE; i++)
     flags[i] = false;
   ofstream fout;
@@ -80,7 +73,7 @@ Rotor1::Rotor1()
       printf("Rotor error %d ", map[i]);
     fout << dec << +map[i] << endl;
   }
-  fout.close(); // закрываем файл
+  fout.close(); // закрываем файл*/
 
   cur_pos = 0;
   rotate_char = 'R';
@@ -95,13 +88,11 @@ Rotor1::Rotor1(int pos) : Rotor1()
 Rotor2::Rotor2()
 {
   for (int i = 0; i < SIZE; i++)
-  {
-    alphabet[i] = i;
     map[i] = i;
-  }
   random_shuffle(&map[0], &map[SIZE]);
 
-  bool flags[SIZE];
+  // Проверка и запись ротора
+  /*bool flags[SIZE];
   for (int i = 0; i < SIZE; i++)
     flags[i] = false;
   ofstream fout;
@@ -115,7 +106,7 @@ Rotor2::Rotor2()
       printf("Rotor error %d ", map[i]);
     fout << dec << +map[i] << endl;
   }
-  fout.close(); // закрываем файл
+  fout.close(); // закрываем файл*/
 
   cur_pos = 0;
   rotate_char = 'F';
@@ -130,13 +121,11 @@ Rotor2::Rotor2(int pos) : Rotor2()
 Rotor3::Rotor3()
 {
   for (int i = 0; i < SIZE; i++)
-  {
-    alphabet[i] = i;
     map[i] = i;
-  }
   random_shuffle(&map[0], &map[SIZE]);
 
-  bool flags[SIZE];
+  // Проверка и запись ротора
+  /*bool flags[SIZE];
   for (int i = 0; i < SIZE; i++)
     flags[i] = false;
   ofstream fout;
@@ -150,7 +139,7 @@ Rotor3::Rotor3()
       printf("Rotor error %d ", map[i]);
     fout << dec << +map[i] << endl;
   }
-  fout.close(); // закрываем файл
+  fout.close(); // закрываем файл*/
 
   cur_pos = 0;
   rotate_char = 'W';

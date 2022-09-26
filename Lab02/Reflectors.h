@@ -17,9 +17,6 @@ public:
   unsigned char reflect(unsigned char in, Rotor *rotor);
 
 protected:
-  //string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //string map = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  unsigned char alphabet[SIZE];
   unsigned char map[SIZE];
 };
 

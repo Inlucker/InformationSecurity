@@ -27,9 +27,6 @@ protected:
   int getMapIndex(unsigned char c);
 
 protected:
-  //string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //string map = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  unsigned char alphabet[SIZE];
   unsigned char map[SIZE];
   unsigned char cur_pos = 0;
   unsigned char rotate_char = SIZE - 1;

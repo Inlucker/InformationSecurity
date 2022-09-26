@@ -33,19 +33,12 @@ int generateReflector(unsigned char *map, int size)
 
 int main()
 {
-  //string str = "DD";
-  //str[0] = char(161);
-  string str = "TheXquickXbrownXfoxXjumpsXoverXtheXlazyXdog";
+  string str = "The quick brown fox jumps over the lazy dog";
   size_t msg_size = str.size();
   unsigned char* input = new unsigned char[msg_size];
   for (size_t i = 0; i < msg_size; i++)
-  {
     input[i] = str[i];
-    cout << input[i] << "";
-  }
-  cout << "\n";
-  //input = "ZFWOERYTVJAYVZKKJVZVUSYWEMXBMHORBITYZJPZVMF";
-  //string output = "";
+
   unsigned char* output = new unsigned char[msg_size];
   for (size_t i = 0; i < msg_size; i++)
     output[i] = 0;
@@ -76,12 +69,12 @@ int main()
     output[i] = tmp;
   }
 
-  cout << " Input: ";
+  cout << "     Plain text: ";
   for (size_t i = 0; i < msg_size; i++)
     cout << input[i];
   cout << endl;
 
-  cout << "Output: ";
+  cout << "    Cipher text: ";
   for (size_t i = 0; i < msg_size; i++)
     cout << output[i];
   cout << endl;
@@ -118,7 +111,7 @@ int main()
     output[i] = tmp;
   }
 
-  cout << "Output: ";
+  cout << "Enciphered text: ";
   for (size_t i = 0; i < msg_size; i++)
     cout << output[i];
   cout << endl;
@@ -131,7 +124,8 @@ int main()
   delete[] input;
   delete[] output;
 
-  int size = SIZE;
+  //Генерация рефлектора
+  /*int size = SIZE;
   unsigned char* map = new unsigned char[size];
   generateReflector(map, size);
 
@@ -139,7 +133,7 @@ int main()
     //printf("%d, ", map[i]);
     //cout << map[i] << " ";
 
-  delete[] map;
+  delete[] map;*/
 
   return 0;
 }
