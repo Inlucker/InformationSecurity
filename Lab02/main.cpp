@@ -1,8 +1,7 @@
 #include <iostream>
 #include <random>
 
-#include "Rotors.h"
-#include "Reflectors.h"
+#include "Enigma.h"
 
 using namespace std;
 
@@ -39,7 +38,12 @@ int main()
   for (size_t i = 0; i < msg_size; i++)
     input[i] = str[i];
 
-  unsigned char* output = new unsigned char[msg_size];
+  cout << "     Plain text: ";
+  for (size_t i = 0; i < msg_size; i++)
+    cout << input[i];
+  cout << endl;
+
+  /*unsigned char* output = new unsigned char[msg_size];
   for (size_t i = 0; i < msg_size; i++)
     output[i] = 0;
 
@@ -119,7 +123,29 @@ int main()
   delete r1;
   delete r2;
   delete r3;
-  delete ref;
+  delete ref;*/
+
+  Enigma *enigma = new Enigma('Q', 'U', 'C');
+  unsigned char* output = nullptr;
+
+  output = enigma->encipher(msg_size, input);
+
+  cout << "    Cipher text: ";
+  for (size_t i = 0; i < msg_size; i++)
+    cout << output[i];
+  cout << endl;
+
+  for (size_t i = 0; i < msg_size; i++)
+    input[i] = output[i];
+  for (size_t i = 0; i < msg_size; i++)
+    output[i] = 0;
+
+  output = enigma->encipher(msg_size, input);
+
+  cout << "Deciphered text: ";
+  for (size_t i = 0; i < msg_size; i++)
+    cout << output[i];
+  cout << endl;
 
   delete[] input;
   delete[] output;
