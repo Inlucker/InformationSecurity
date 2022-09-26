@@ -33,9 +33,9 @@ int generateReflector(unsigned char *map, int size)
 
 int main()
 {
-  string str = "A";
+  //string str = "DD";
   //str[0] = char(161);
-  //string str = "TheXquickXbrownXfoxXjumpsXoverXtheXlazyXdog";
+  string str = "TheXquickXbrownXfoxXjumpsXoverXtheXlazyXdog";
   size_t msg_size = str.size();
   unsigned char* input = new unsigned char[msg_size];
   for (size_t i = 0; i < msg_size; i++)

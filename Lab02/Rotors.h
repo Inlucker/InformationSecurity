@@ -3,6 +3,9 @@
 
 #include <string>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <cstdio>
 
 #define SIZE 256
 

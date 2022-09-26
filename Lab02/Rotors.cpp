@@ -30,13 +30,16 @@ unsigned char Rotor::getCurChar()
 
 unsigned char Rotor::forward(unsigned char in, unsigned char prev_char)
 {
-  unsigned char out = in + (cur_pos - prev_char);
+  unsigned char index = in + (cur_pos - prev_char);
+  unsigned char out = map[index];
   return out;
 }
 
 unsigned char Rotor::backward(unsigned char in, unsigned char next_char)
 {
   in = alphabet[getMapIndex(in)];
+  //unsigned char index = in - (cur_pos - next_char);
+  //unsigned char out = map[index];
   unsigned char out = in - (cur_pos - next_char);
   return out;
 }
@@ -62,6 +65,23 @@ Rotor1::Rotor1()
     map[i] = i;
   }
   random_shuffle(&map[0], &map[SIZE]);
+
+  bool flags[SIZE];
+  for (int i = 0; i < SIZE; i++)
+    flags[i] = false;
+  ofstream fout;
+  fout.open("Rotor1.txt"); // связываем объект с файлом
+  fout.setf(ios::dec);
+  for (int i = 0; i < SIZE; i++)
+  {
+    if (!flags[map[i]])
+      flags[map[i]] = true;
+    else
+      printf("Rotor error %d ", map[i]);
+    fout << dec << +map[i] << endl;
+  }
+  fout.close(); // закрываем файл
+
   cur_pos = 0;
   rotate_char = 'R';
 }
@@ -80,6 +100,23 @@ Rotor2::Rotor2()
     map[i] = i;
   }
   random_shuffle(&map[0], &map[SIZE]);
+
+  bool flags[SIZE];
+  for (int i = 0; i < SIZE; i++)
+    flags[i] = false;
+  ofstream fout;
+  fout.open("Rotor2.txt"); // связываем объект с файлом
+  fout.setf(ios::dec);
+  for (int i = 0; i < SIZE; i++)
+  {
+    if (!flags[map[i]])
+      flags[map[i]] = true;
+    else
+      printf("Rotor error %d ", map[i]);
+    fout << dec << +map[i] << endl;
+  }
+  fout.close(); // закрываем файл
+
   cur_pos = 0;
   rotate_char = 'F';
 }
@@ -98,6 +135,23 @@ Rotor3::Rotor3()
     map[i] = i;
   }
   random_shuffle(&map[0], &map[SIZE]);
+
+  bool flags[SIZE];
+  for (int i = 0; i < SIZE; i++)
+    flags[i] = false;
+  ofstream fout;
+  fout.open("Rotor3.txt"); // связываем объект с файлом
+  fout.setf(ios::dec);
+  for (int i = 0; i < SIZE; i++)
+  {
+    if (!flags[map[i]])
+      flags[map[i]] = true;
+    else
+      printf("Rotor error %d ", map[i]);
+    fout << dec << +map[i] << endl;
+  }
+  fout.close(); // закрываем файл
+
   cur_pos = 0;
   rotate_char = 'W';
 }
