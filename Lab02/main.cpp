@@ -150,14 +150,15 @@ int main()
   delete[] input;
   delete[] output;
 
-  if (enigma->encipher("text.txt", "cipher_text.txt"))
-    cout << "File text.txt encipered in cipher_text.txt" << endl;
+  string file_name = "text.txt";
+  if (enigma->encipher(file_name, "cipher_" + file_name))
+    cout << "File " << file_name << " encipered in " << "cipher_" + file_name << endl;
   else
-    cout << "Couldn't encipher file text.txt" << endl;
-  if (enigma->encipher("cipher_text.txt", "deciphered_text.txt"))
-    cout << "File cipher_text.txt encipered in deciphered_text.txt" << endl;
+    cout << "Couldn't encipher file " << file_name << endl;
+  if (enigma->encipher("cipher_" + file_name, "deciphered_" + file_name))
+    cout << "File " << "cipher_" + file_name << " encipered in " << "deciphered_" + file_name << endl;
   else
-    cout << "Couldn't encipher file cipher_text.txt" << endl;
+    cout << "Couldn't encipher file " << "cipher_" + file_name << endl;
 
   //Генерация рефлектора
   /*int size = SIZE;
