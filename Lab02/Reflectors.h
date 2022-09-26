@@ -2,6 +2,7 @@
 #define REFLECTORS_H
 
 #include <string>
+#include <iostream>
 
 #include "Rotors.h"
 

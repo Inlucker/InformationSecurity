@@ -63,6 +63,7 @@ Rotor1::Rotor1()
   }
   random_shuffle(&map[0], &map[SIZE]);
   cur_pos = 0;
+  rotate_char = 'R';
 }
 
 Rotor1::Rotor1(int pos) : Rotor1()
@@ -80,6 +81,7 @@ Rotor2::Rotor2()
   }
   random_shuffle(&map[0], &map[SIZE]);
   cur_pos = 0;
+  rotate_char = 'F';
 }
 
 Rotor2::Rotor2(int pos) : Rotor2()
@@ -97,6 +99,7 @@ Rotor3::Rotor3()
   }
   random_shuffle(&map[0], &map[SIZE]);
   cur_pos = 0;
+  rotate_char = 'W';
 }
 
 Rotor3::Rotor3(int pos) : Rotor3()

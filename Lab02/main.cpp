@@ -6,19 +6,8 @@
 
 using namespace std;
 
-/*bool isValueInMap(unsigned char value, int size, unsigned char map[size])
-{
-  for (int i = 0; i < size; i++)
-  {
-    if (map[i] == value)
-      return true;
-  }
-  return false;
-}*/
-
 int generateReflector(unsigned char *map, int size)
 {
-  //map = new unsigned char[size];
   bool flags[size];
 
   for (int i = 0; i < size; i++)
@@ -44,9 +33,8 @@ int generateReflector(unsigned char *map, int size)
 
 int main()
 {
-
   string str = "A";
-  //str[0] = char(246);
+  //str[0] = char(161);
   //string str = "TheXquickXbrownXfoxXjumpsXoverXtheXlazyXdog";
   size_t msg_size = str.size();
   unsigned char* input = new unsigned char[msg_size];
