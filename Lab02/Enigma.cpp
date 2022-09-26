@@ -70,3 +70,53 @@ unsigned char *Enigma::encipher(size_t size, unsigned char *input)
   reset();
   return output;
 }
+
+bool Enigma::encipher(string input_file_name, string output_file_name)
+{
+  ifstream fin(input_file_name, ios::in | ios::binary);
+  if (!fin)
+    return false;
+
+  ofstream fout;
+  if (output_file_name == "default_file_name")
+    fout.open("cipher_" + input_file_name, ios::out | ios::binary);
+  else
+    fout.open(output_file_name, ios::out | ios::binary);
+
+  if (!fout)
+  {
+    fin.close();
+    return false;
+  }
+
+  char byte = 0;
+
+  while (fin.read(&byte, sizeof(char)))
+  {
+    //cout << byte;
+
+    unsigned char tmp = byte;
+
+    if (r1->rotate())
+      if (r2->rotate())
+        r3->rotate();
+
+    tmp = r1->forward(tmp);
+    tmp = r2->forward(tmp, r1->getCurChar());
+    tmp = r3->forward(tmp, r2->getCurChar());
+
+    tmp = ref->reflect(tmp, r3);
+
+    tmp = r3->backward(tmp, r2->getCurChar());
+    tmp = r2->backward(tmp, r1->getCurChar());
+    tmp = r1->backward(tmp);
+
+    fout << tmp;
+  }
+  //cout << endl;
+  reset();
+
+  fin.close();
+  fout.close();
+  return true;
+}
