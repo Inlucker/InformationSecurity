@@ -11,7 +11,7 @@ void DES::randomKey()
 {
   for (size_t i = 0; i < 64; i++)
     key[i] = rand() % 2;
-  cout << key << endl;
+  //cout << key << endl;
   genRoundKeys();
 }
 
@@ -34,8 +34,18 @@ bool DES::encipher(string input_file_name, string output_file_name)
   }
 
   byte_t tmp[8];
-  while (fin.read(tmp, sizeof(char)*8))
+  while (!fin.eof())
+  //while (fin.read(tmp, sizeof(char)*8))
   {
+    if (!fin.read(tmp, sizeof(char)*8))
+    {
+      size_t extracted = fin.gcount();
+      if (!extracted)
+        break;
+      int flag = 8-extracted;
+      for (int i = extracted; i < 8; i++)
+        tmp[i] = flag;
+    }
     unsigned char uc[8];
     for (int i = 0; i < 8; i++)
       uc[i] = tmp[i];
@@ -114,8 +124,10 @@ bool DES::decipher(string input_file_name, string output_file_name)
   }
 
   byte_t tmp[8];
+  //while (!fin.eof())
   while (fin.read(tmp, sizeof(char)*8))
   {
+    //fin.read(tmp, sizeof(char)*8);
     unsigned char uc[8];
     for (int i = 0; i < 8; i++)
       uc[i] = tmp[i];
@@ -167,8 +179,13 @@ bool DES::decipher(string input_file_name, string output_file_name)
     //output
     for (int i = 0; i < 8; i++)
       tmp[i] = bitsToChar(msg_part, i);
-    for (int i = 7; i >= 0; i--)
-      fout << tmp[i];
+    //checkForExtraChars
+    if (tmp[0] >= 1 && tmp[0] <= 8)
+      for (int i = 7; i >= tmp[0]; i--)
+        fout << tmp[i];
+    else
+      for (int i = 7; i >= 0; i--)
+        fout << tmp[i];
   }
 
   fin.close();
