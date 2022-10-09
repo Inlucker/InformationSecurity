@@ -9,21 +9,7 @@ using namespace std;
 
 int main()
 {
-  /*bitset<N> key1;
-  bitset<N> key2;
-  for (size_t i = 0; i < N; i++)
-  {
-    key1[i] = rand() % 2;
-    key2[i] = rand() % 2;
-  }
-  cout << key1 << endl;
-  cout << key2 << endl;
-  bitset<N> key3 =  key1 ^ key2;
-  cout << key3 << endl;*/
-
   DES alg;
-
-  //alg.randomKey();
 
   string file_name = "text.txt";
   if (alg.encipher(file_name, "ciphered_" + file_name))
