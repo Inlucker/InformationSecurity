@@ -12,6 +12,7 @@ int main()
   DES alg;
 
   string file_name = "text.txt";
+  //file_name = "Lab01.exe";
   if (alg.encipher(file_name, "ciphered_" + file_name))
     cout << "File " << file_name << " encipered in " << "ciphered_" + file_name << endl;
   else

@@ -107,7 +107,12 @@ bool DES::encipher(string input_file_name, string output_file_name)
 
 bool DES::decipher(string input_file_name, string output_file_name)
 {
+  ifstream fin_size(input_file_name, ios::binary | ios::ate);
+  int file_size = fin_size.tellg();
+  fin_size.close();
+  //cout << file_size;
   ifstream fin(input_file_name, ios::in | ios::binary);
+
   if (!fin)
     return false;
 
@@ -128,6 +133,7 @@ bool DES::decipher(string input_file_name, string output_file_name)
   while (fin.read(tmp, sizeof(char)*8))
   {
     //fin.read(tmp, sizeof(char)*8);
+    //cout << fin.tellg() << endl;
     unsigned char uc[8];
     for (int i = 0; i < 8; i++)
       uc[i] = tmp[i];
@@ -180,9 +186,20 @@ bool DES::decipher(string input_file_name, string output_file_name)
     for (int i = 0; i < 8; i++)
       tmp[i] = bitsToChar(msg_part, i);
     //checkForExtraChars
-    if (tmp[0] >= 1 && tmp[0] <= 8)
-      for (int i = 7; i >= tmp[0]; i--)
-        fout << tmp[i];
+    if (fin.tellg() >= file_size && tmp[0] >= 1 && tmp[0] <= 8)
+    {
+      bool flag = true;
+      for (int i = 1; i < tmp[0]; i++)
+        if (tmp[i] != tmp[0])
+          flag = false;
+
+      if (flag)
+        for (int i = 7; i >= tmp[0]; i--)
+          fout << tmp[i];
+      else
+        for (int i = 7; i >= 0; i--)
+          fout << tmp[i];
+    }
     else
       for (int i = 7; i >= 0; i--)
         fout << tmp[i];
