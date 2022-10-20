@@ -21,7 +21,7 @@ namespace RSA
       if (D < 0)
         D += Fi();*/
       //D = 33263;
-      D = extEvklid(E, Fi());
+      D = getD();
       byte_size = getByteSize();
     }
     public void encipherFile(string in_file_name, string out_file_name)
@@ -176,8 +176,7 @@ namespace RSA
     }
     long extEvklid(long A, long B)
     {
-      long fi = B;
-      long R = B % A;
+      long R = A % B;
       long[,] E = new long[2, 2];
       E[0, 0] = 1;
       E[0, 1] = 0;
@@ -185,8 +184,8 @@ namespace RSA
       E[1, 1] = 1;
       while (R != 0)
       {
-        R = B % A;
-        long q = B / A;
+        R = A % B;
+        long q = A / B;
         long[,] tmpE = new long[2, 2];
         for (int i = 0; i < 2; i++)
           for (int j = 0; j < 2; j++)
@@ -202,13 +201,18 @@ namespace RSA
         E[1, 0] = tmpE[1, 0] * E2[0, 0] + tmpE[1, 1] * E2[1, 0];
         E[1, 1] = tmpE[1, 0] * E2[0, 1] + tmpE[1, 1] * E2[1, 1];
 
-        long tmpA = B % A;
-        B = A;
-        A = tmpA;
+        long tmpB = A % B;
+        A = B;
+        B = tmpB;
       }
       long res = E[1, 0];
+      return res;
+    }
+    long getD()
+    {
+      long res = extEvklid(Fi(), E);
       if (res < 0)
-        res += fi;
+        res += Fi();
       return res;
     }
     int getByteSize()
