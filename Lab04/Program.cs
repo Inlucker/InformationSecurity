@@ -12,7 +12,7 @@ namespace RSA
     {
       RSA rsa = new RSA();
 
-      String file_name = "test.txt";
+      String file_name = "text.txt";
       //file_name = "nginx-1.23.1.zip";
       String ciphered_file_name = "ciphered_" + file_name;
       String deciphered_file_name = "deciphered_" + file_name;;

@@ -15,9 +15,13 @@ namespace RSA
       Q = 211;
       N = P * Q; //41989
       Console.WriteLine(Fi()); //41580
-      E = 24947; //взаимно простое с Fi и < Fi
-      //D = extEvkild();
-      D = 33263;
+      //E = 24947; //взаимно простое с Fi и < Fi
+      E = getE();
+      /*gcd(E, Fi(), out D, out y);
+      if (D < 0)
+        D += Fi();*/
+      //D = 33263;
+      D = extEvklid(E, Fi());
       byte_size = getByteSize();
     }
     public void encipherFile(string in_file_name, string out_file_name)
@@ -138,9 +142,74 @@ namespace RSA
       }
       return res;
     }
-    long extEvkild()
+    bool evklid(long a, long b)
     {
-      return 0;
+      long tmp;
+      while (b != 1 && b != 0)
+      {
+        tmp = a % b;
+        a = b;
+        b = tmp;
+      }
+      return (b == 1);
+    }
+    long getE()
+    {
+      long fi = Fi();
+      long tmp = Convert.ToInt64(fi * 0.6);
+      while (!evklid(fi, tmp))
+        tmp--;
+      return tmp;
+    }
+    long gcd(long a, long b, out long x, out long y)
+    {
+      if (a == 0)
+      {
+        x = 0; y = 1;
+        return b;
+      }
+      long x1, y1;
+      long d = gcd(b % a, a, out x1, out y1);
+      x = y1 - (b / a) * x1;
+      y = x1;
+      return d;
+    }
+    long extEvklid(long A, long B)
+    {
+      long fi = B;
+      long R = B % A;
+      long[,] E = new long[2, 2];
+      E[0, 0] = 1;
+      E[0, 1] = 0;
+      E[1, 0] = 0;
+      E[1, 1] = 1;
+      while (R != 0)
+      {
+        R = B % A;
+        long q = B / A;
+        long[,] tmpE = new long[2, 2];
+        for (int i = 0; i < 2; i++)
+          for (int j = 0; j < 2; j++)
+            tmpE[i, j] = E[i, j];
+            long[,] E2 = new long[2, 2];
+        E2[0, 0] = 0;
+        E2[0, 1] = 1;
+        E2[1, 0] = 1;
+        E2[1, 1] = -q;
+
+        E[0, 0] = tmpE[0, 0] * E2[0, 0] + tmpE[0, 1] * E2[1, 0];
+        E[0, 1] = tmpE[0, 0] * E2[0, 1] + tmpE[0, 1] * E2[1, 1];
+        E[1, 0] = tmpE[1, 0] * E2[0, 0] + tmpE[1, 1] * E2[1, 0];
+        E[1, 1] = tmpE[1, 0] * E2[0, 1] + tmpE[1, 1] * E2[1, 1];
+
+        long tmpA = B % A;
+        B = A;
+        A = tmpA;
+      }
+      long res = E[1, 0];
+      if (res < 0)
+        res += fi;
+      return res;
     }
     int getByteSize()
     {
