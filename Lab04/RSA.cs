@@ -11,13 +11,19 @@ namespace RSA
   {
     public RSA()
     {
-      //long fi = Fi(); // 986040
+      P = 199;
+      Q = 211;
+      N = P * Q; //41989
+      Console.WriteLine(Fi()); //41580
+      E = 24947; //взаимно простое с Fi и < Fi
+      //D = extEvkild();
+      D = 33263;
       byte_size = getByteSize();
     }
     public void encipherFile(string in_file_name, string out_file_name)
     {
       using (FileStream ifstream = File.OpenRead(in_file_name))
-      using (FileStream ofstream = File.OpenWrite(out_file_name))
+      using (FileStream ofstream = File.Open(out_file_name, FileMode.Create, FileAccess.Write))
       {
         long M = ifstream.ReadByte();
         while (M != -1)
@@ -35,11 +41,12 @@ namespace RSA
     public void decipherFile(string in_file_name, string out_file_name)
     {
       using (FileStream ifstream = File.OpenRead(in_file_name))
-      using (FileStream ofstream = File.OpenWrite(out_file_name))
+      using (FileStream ofstream = File.Open(out_file_name, FileMode.Create, FileAccess.Write))
       {
         byte[] C = new byte[8];
         int n = ifstream.Read(C, 0, byte_size);
-        while (n == 3)
+        int count = 0;
+        while (n == byte_size)
         {
           long lres = BitConverter.ToInt64(C, 0);
           lres = fastExp(lres, D);
@@ -131,6 +138,10 @@ namespace RSA
       }
       return res;
     }
+    long extEvkild()
+    {
+      return 0;
+    }
     int getByteSize()
     {
       int bits = 1;
@@ -140,7 +151,10 @@ namespace RSA
         t *= 2;
         bits++;
       }
-      return bits / 8 + 1;
+      int res = bits / 8;
+      if (bits % 8 != 0)
+        res++;
+      return res;
     }
     long Fi() { return (P - 1) * (Q - 1); } // 986040
     long P = 991;
